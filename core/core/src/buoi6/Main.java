@@ -9,18 +9,18 @@ public class Main {
         // tạo ra các đối tượng xe xe1
         Car xe1 = new Car(); // new Car(): constructor khởi tạo ra đối tượng từ class
         // set giá trị cho các thuộc tính của đối tượng xe1
-        xe1.namSanXuat = 2025;
-        xe1.ten = "Xe 1";
-        xe1.mauSac = "Màu đỏ";
+        xe1.setNamSanXuat(2025);
+//        xe1.ten = "Xe 1";
+//        xe1.mauSac = "Màu đỏ";
         // gọi tới các phương thức của đối tượng xe 1
         xe1.run();
         xe1.showInfo();
 
         // tạo ra đối tượng xe xe2
         Car xe2 = new Car();
-        xe2.namSanXuat = 2024;
-        xe2.ten = "Xe 2";
-        xe2.mauSac = "Màu vàng";
+//        xe2.namSanXuat = 2024;
+//        xe2.ten = "Xe 2";
+//        xe2.mauSac = "Màu vàng";
         // gọi tới các phương thức của đối tượng xe 1
         xe2.run();
         xe2.showInfo();
@@ -35,9 +35,9 @@ public class Main {
             // khởi tạo ra 1 đối tượgn xe
             Car car = new Car();
             // truy cập vào thuộc tính của đối tượng xe để set value có các thuộc tính thông qua "."
-            car.ten ="Xe " + i;
-            car.namSanXuat = i + 2000;
-            car.mauSac = "Mau " + i;
+            car.setTen("Xe " + i);
+            car.setNamSanXuat(i + 2000);
+            car.setMauSac("Mau " + i);
             // gọi tới method của đối tượng xe thông qua "."
             car.run();
             // thêm xe vào danh sách xe

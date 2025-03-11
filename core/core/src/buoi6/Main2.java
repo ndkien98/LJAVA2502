@@ -4,9 +4,9 @@ public class Main2 {
 
     public static void main(String[] args) {
         Car car = new Car();
-        car.ten = "B";
+        car.setTen("B");
         setTenCar(car);
-        System.out.println(car.ten);
+        System.out.println(car.getTen());
 
         int tong = 20;
         congHaiSo(tong);
@@ -14,7 +14,7 @@ public class Main2 {
     }
 
     public static void setTenCar(Car car){
-        car.ten = "A";
+        car.setTen("A");
     }
 
     public static void congHaiSo(int tong){
