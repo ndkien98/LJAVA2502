@@ -8,6 +8,7 @@ public class Main {
         // khởi abtract class thông qua subclass
         HinhTriuTuong hinhTron = new HinhTron();
 
+        HinhTriuTuong hinhTron2 = new HinhTron();
         /*
         khởi tạo đối tượng hinhTriuTuong bằng anonymous class
         anonymous class:
