@@ -21,9 +21,13 @@ public class PhanSo {
     public void congPhanSo(PhanSo phanSoDuocCongVao){
         if (this.mauSo == phanSoDuocCongVao.getMauSo()){
             this.tuSo = this.tuSo + phanSoDuocCongVao.getTuSo();
-            this.mauSo = this.mauSo + phanSoDuocCongVao.getMauSo();
+//            this.mauSo = this.mauSo + phanSoDuocCongVao.getMauSo();
             return;
         }
+
+        int[] arr = new int[10];
+        int a = arr.length;
+
         this.tuSo = (this.tuSo * phanSoDuocCongVao.getMauSo()) + (this.mauSo * phanSoDuocCongVao.getTuSo());
         this.mauSo = this.mauSo * phanSoDuocCongVao.getMauSo();
     }
@@ -31,7 +35,7 @@ public class PhanSo {
     public void truPhanSo(PhanSo phanSoDuocTruVao){
         if (this.mauSo == phanSoDuocTruVao.getMauSo()){
             this.tuSo = this.tuSo - phanSoDuocTruVao.getTuSo();
-            this.mauSo = this.mauSo + phanSoDuocTruVao.getMauSo();
+//            this.mauSo = this.mauSo + phanSoDuocTruVao.getMauSo();
             return;
         }
         this.tuSo = (this.tuSo * phanSoDuocTruVao.getMauSo()) - (this.mauSo * phanSoDuocTruVao.getTuSo());
