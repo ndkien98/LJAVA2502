@@ -12,7 +12,6 @@ abstract: biến class thành class trìu tượng(abstract)
 
  */
 public abstract class HinhTriuTuong {
-
     private float dienTich;
     private float chuVi;
     private String ten;
@@ -26,7 +25,6 @@ public abstract class HinhTriuTuong {
         System.out.println("Nhap Ten: ");
         this.ten = new Scanner(System.in).nextLine();
     }
-
     /*
     demo method abstract:
         - không có thân hàm
