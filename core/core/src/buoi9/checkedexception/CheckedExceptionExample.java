@@ -16,8 +16,8 @@ public class CheckedExceptionExample {
             while (sc.hasNextLine()) {
                 System.out.println(sc.nextLine());
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("Lỗi: Tệp không tồn tại.");
+        }catch (FileNotFoundException e){
+            System.out.println("Đọc file lỗi!");
         }
     }
 }
