@@ -86,6 +86,16 @@ public class Bai1 {
                 }).findFirst()// lấy ra phần tử đầu tiên trong danh sách stream tìm đươc
                 .orElse(null); // nếu trường hợp không có phần tử nào thõa mãn với tên truyền vào => trả về null
 
+
+        Person personResult2 = personList.parallelStream()
+                .filter(data -> { // sử dụng hàm filter của stream, để so sánh tất cả các phần tử
+                    if (data.getName().equals(name)){
+                        return true; // nếu trả về true => lấy phần tưr đó
+                    }
+                    return false; // không lấy phần tử đó
+                }).findFirst()// lấy ra phần tử đầu tiên trong danh sách stream tìm đươc
+                .orElse(null); // nếu trường hợp không có phần tử nào thõa mãn với tên truyền vào => trả về null
+
         return personResult;
     }
 
