@@ -23,8 +23,8 @@ public class Bai1 {
         List<Person> personList = initPerson();
         showAll(personList);
         findByName("name 4",personList);
-        deletedByName("name 4",personList);
-        showAll(personList);
+//        deletedByName("name 4",personList);
+//        showAll(personList);
 
         // c1 triển khai anonymous class Comparator
         System.out.println("c1 triển khai anonymous class Comparator id từ cao đến thấp sử dụng method sort");
@@ -39,10 +39,23 @@ public class Bai1 {
         System.out.println("c2 triển khai bằng lamda expression sắp xếp lại từ thấp đến cao");
         personList.sort((o1,o2) -> o1.getId() - o2.getId());
         showAll(personList);
+        deletedByName2("name 4",personList);
+        showAll(personList);
 
     }
 
 
+    public static void deletedByName2(String name, List<Person> personList){
+        System.out.println(String.format("Xóa bằng iterator"));
+        Iterator<Person> iterator = personList.iterator();
+        while(iterator.hasNext()){
+            Person person = iterator.next();
+            if(person.getName().equals(name)){
+                iterator.remove();
+            }
+        }
+        showAll(personList);
+    }
 
     public static void deletedByName(String name, List<Person> personList){
         // tim kiếm xem tồn tại person với tên không
