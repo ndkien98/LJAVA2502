@@ -13,6 +13,8 @@ yêu cầu:
     2) tạo ra List<Person> và thêm person vào danh sách
     3) Hiển thị thông tin các person
     4) Cho phép user nhập vào tên, tìm kiếm person
+    5) Nhập vào tên và xóa đi person sử dụng method remove
+    6) Sắp xếp danh sách person với id từ thấp đến cao sử dụng hàm sort()
 
  */
 
