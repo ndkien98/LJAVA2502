@@ -5,8 +5,9 @@ Cách tính gia thừa của số n = n * (n - 1) * (n - 2) * (n - 3) * .... * 1
 public class Bai3 {
 
     public static void main(String[] args) {
+        Utils utils = new Utils();
 
-        int n = Utils.nhapN();
+        int n = utils.nhapN();
         System.out.println("tinhGiaThuaC1(n): " + tinhGiaThuaC1(n));
         System.out.println("tinhGiaThuaC2(n): " + tinhGiaThuaC2(n));
 

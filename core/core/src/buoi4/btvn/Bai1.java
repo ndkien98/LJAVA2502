@@ -4,7 +4,9 @@ import java.util.Scanner;
 
 public class Bai1 {
     public static void main(String[] args) {
-        int n = Utils.nhapN();
+        Utils utils = new Utils();
+
+        int n = utils.nhapN();
         Long tong = tinhTongLapPhuong(n);
         System.out.println("Tong lap phuong: " + tong);
     }

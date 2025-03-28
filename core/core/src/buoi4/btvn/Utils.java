@@ -3,7 +3,8 @@ package buoi4.btvn;
 import java.util.Scanner;
 
 public class Utils {
-    public static int nhapN(){
+
+    public int nhapN(){
         int n = 0;
         do {
             System.out.println("Nhap vao n: ");
