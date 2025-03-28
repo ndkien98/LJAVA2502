@@ -47,7 +47,7 @@ public class Main5 {
 
     }
 
-    private static List<Student> initStudent() {
+    public static List<Student> initStudent() {
         List<Student> danhSachHocSinh = new ArrayList<Student>();
         // khởi tạo danh sách học sinh
         for (int i = 0; i < 10; i++) {
@@ -60,6 +60,28 @@ public class Main5 {
         return danhSachHocSinh;
     }
 
+}
+
+class Lecture{
+    List<Student> students;
+
+    String name;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
 }
 class Student {
     String name;
