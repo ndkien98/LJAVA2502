@@ -83,4 +83,66 @@ select count(*),ngay_sinh from sinhvien group by ngay_sinh;
 -- đếm các bản ghi ngày sinh có số lượng > 1
 select count(*),ngay_sinh from sinhvien group by ngay_sinh having count(*) > 1;
 
---
+/*
+ Khóa chính (primary key):
+    - là 1 cột được sử dụng để xác định tính duy nhất của dữ liệu trong table
+    - dữ liệu của khóa chính luôn luôn duy nhất trong table
+    - có thể có 1 hoặc nhiều khóa chính trong database
+
+ Khóa ngoại:
+    - được sử dụng để tạo ra các mối quan hệ giữa các table trong database
+    - đảm bảo tính ràng buộc dữ liệu, tính đúng đẵn của dữ liệu trong cơ sở dữ liệu quan hệ
+    - khóa có thể trùng nhau trong 1 table
+ */
+
+-- bảng lớp học
+/*
+ Muốn quan hệ bảng lớp học và bảng sinh viên
+    1 - n: 1 lớp học có thể chứa được nhiều sinh viên, đứng từ góc độ lớp học
+    1 - n: 1 sinh viên có thể học được nhiều lớp học
+ => là mối quan hệ n - n : 1 lớp học chứa được nhiều sinh viên, 1 sinh viên học được nhiều lớp học
+ */
+-- LapTop
+/*
+ 1 sinh viên có thể có nhiều laptop: 1 - n
+ 1 laptop chỉ thuộc về đúng 1 sinh viên duy nhất
+ => đây là mối quan hệ 1 - n
+ */
+
+create table lap_top(
+    id integer primary key auto_increment,-- auto_increment: giá trị id tự động tăng khi thêm mới 1 bản ghi vào table
+    ten varchar(100),
+    ngay_cap date,
+    sinh_vien_id integer
+);
+/*
+ làm sao để biết được 1 bản ghi laptop này thuộc về sinh viên nào
+ => tạo khóa ngoại từ bảng lap_top có tên: sinh_vien_id
+   sinh_vien_id:
+     - là khóa ngoại tại bảng lap_top tham chiếu đến cột id của bảng sinh viên
+     - sử dụng khóa ngoại này để xác định được bản ghi laptop đó thuộc về sinh viên nào
+     - đảm bảo tính toàn vẹn dữ liệu rằng giá trị của cột sinh_vien_id bắt buộc phải thuộc vào tập giá trị của cột id trong bảng sinh_vien
+ */
+-- cách thêm khóa ngoại vào table
+alter table lap_top
+    add foreign key (sinh_vien_id) references sinhvien (id);
+
+insert into lap_top (ten, ngay_cap, sinh_vien_id)
+values
+    ('Del','2025-04-01',1),
+    ('Macbook','2025-04-01',2),
+    ('Asua','2025-04-01',1);
+
+select * from lap_top;
+
+/*
+ - 1 - n: quan hệ 1 nhiều
+        vd: 1 lớp học có nhiều sinh viên
+ - n - 1: mối quan hệ nhiều 1
+        vd: nhiều laptop thuộc về 1 sinh viên
+ - 1 - 1 : một - một
+        vd: 1 căn cước chỉ thuộc về 1 người
+  - n - n : mối quan hệ nhiều nhiều
+        vd: 1 giảng viên dạy nhiều sinh viên, 1 sinh viên học nhiều giảng viên
+        để biểu diễn được cần phải tạo ra 1 bảng trung gian
+ */
