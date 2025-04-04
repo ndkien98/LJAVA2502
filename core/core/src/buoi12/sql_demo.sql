@@ -76,6 +76,7 @@ select * from sinhvien where id =2 or ho_ten like '%Lê%';
 select count(*) from sinhvien; -- đếm tổgn số lượng bản ghi
 
 -- group by: gom nhóm tất cả các bản ghi theo một cột nào đó
+                               use quanlysinhvien;
 select count(*),ngay_sinh from sinhvien group by ngay_sinh;
 
 -- having: lọc tiếp các bản ghi sau khi đã group by
