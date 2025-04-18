@@ -1,6 +1,8 @@
-package buoi15;
+package buoi16.model;
 
-public class Production {
+import java.util.List;
+
+public class ProductionModel {
 
     private Integer id;
     private String name;
@@ -8,14 +10,25 @@ public class Production {
     private String description;
     private int total;
 
+    List<ProductionDetailModel> detailModels;
+
+    public void setDetailModels(List<ProductionDetailModel> detailModels) {
+        this.detailModels = detailModels;
+    }
+
+    public List<ProductionDetailModel> getDetailModels() {
+        return detailModels;
+    }
+
     @Override
     public String toString() {
-        return "Production{" +
+        return "ProductionModel{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", total=" + total +
+                ", detailModels=" + detailModels +
                 '}';
     }
 

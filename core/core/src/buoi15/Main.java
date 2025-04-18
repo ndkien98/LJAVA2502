@@ -1,5 +1,7 @@
 package buoi15;
 
+import buoi16.model.ProductionModel;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,7 @@ public class Main {
             System.out.println("b3: gửi câu sql đến database, query lay ra dữ liệu, Nhan dữ lieu dạng ResultSet");
             ResultSet resultSet = statement.executeQuery();
             System.out.println("b4: convert dữ liệu dạng resultSet thành class java");
-            List<Production> productionsResult = new ArrayList<Production>();
+            List<ProductionModel> productionsResult = new ArrayList<ProductionModel>();
             int count = 1;
             while (resultSet.next()) { // resultSet.next() vẫn còn bản ghi tiếp theo để đọc
                 System.out.println("Đọc dữ liệu bản ghi thứ " + count);
@@ -51,20 +53,20 @@ public class Main {
                 String description = resultSet.getString("description");
                 Integer total = resultSet.getInt("total");
                 System.out.println("Set dữ liệu vào class ");
-                Production production = new Production();
-                production.setId(id);
-                production.setName(name);
-                production.setPrice(price);
-                production.setDescription(description);
-                production.setTotal(total);
+                ProductionModel productionModel = new ProductionModel();
+                productionModel.setId(id);
+                productionModel.setName(name);
+                productionModel.setPrice(price);
+                productionModel.setDescription(description);
+                productionModel.setTotal(total);
                 System.out.println("Lưu production vào danh sách kết quả " + count);
-                productionsResult.add(production);
+                productionsResult.add(productionModel);
                 count++;
             }
 
             System.out.println("B5: Hiển thị ra dữ liệu vua đọc được từ database ");
             productionsResult.forEach(System.out::println);
-            List<Integer> idProduction = productionsResult.stream().map(Production::getId).collect(Collectors.toList());
+            List<Integer> idProduction = productionsResult.stream().map(ProductionModel::getId).collect(Collectors.toList());
             System.out.println("lấy thông tin detail");
             String sqlDetail = "select production_detail.production_id,color.name,size.name,image.path from production_detail\n" +
                     "inner join color on production_detail.color_id = color.id\n" +

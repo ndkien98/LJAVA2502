@@ -35,7 +35,7 @@ select * from lap_top where lap_top.id_sinh_vien = (select sinh_vien.id from sin
                                     + ngày tạo
         - Sản phẩm (Production) : Chuyên lưu trữ các thông tin về sản phẩm
                                     + tên, giá, ảnh, kích thước, màu sắc, số lượng, mô tả
-            => tách ra 1 thực thể nưa chi tiết sản phẩn (production detail )
+            => tách ra 1 thực thể nưa chi tiết sản phẩn (productionModel detail )
                                 + lưu thông tin của chi tiết các sản phẩm ứng với màu sắn, size, hình ảnh, so lượng
                                 vd:
                                     cùng 1 sản phẩm áo polo link https://atino.vn/ao-polo-regular-l.3.3439-p37926475.html
@@ -59,14 +59,14 @@ select * from lap_top where lap_top.id_sinh_vien = (select sinh_vien.id from sin
         n - n: nhiều nhiều
         1 - 1:
  Xác định quan hệ giua các thực thể ?
-        - category - production : 1 - n
+        - category - productionModel : 1 - n
         - branch - category : n - n
         - company info - social : 1 - n
         - branch - social : 1 - n
-        - production - image : n - n
-        - production - color: n - n
+        - productionModel - image : n - n
+        - productionModel - color: n - n
         - prodcution - size : n - n
-            entity trung gian chinh la production detail
+            entity trung gian chinh la productionModel detail
 
  b5 tư sơ đồ thực thể liên kế (Entity Relationship diagram ) -> chuyển sang các table trong database với quy tắc
     - các thực thể tương tứng với các table

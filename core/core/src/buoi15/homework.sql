@@ -56,7 +56,7 @@ create table color
     code varchar(50)
 );
 
-create table production
+create table productionModel
 (
     id          int primary key auto_increment,
     name        nvarchar(255),
@@ -73,7 +73,7 @@ create table production_detail
     color_id      int,
     image_id      int,
     quality       int,
-    foreign key (production_id) references production(id),
+    foreign key (production_id) references productionModel(id),
     foreign key (size_id) references size(id),
     foreign key (color_id) references color(id),
     foreign key (image_id) references image(id)
@@ -100,7 +100,7 @@ values ('To Nhat','T001','2XL'),
        ('Vua','T001','L'),
        ('Nho','T001','M');
 
-insert into production(name, price, description, total)
+insert into productionModel(name, price, description, total)
 values ('Áo Phông Oversize L.3.2880',149.000,'Ao Phong',12);
 
 insert into production_detail(production_id, size_id, color_id, image_id, quality)
