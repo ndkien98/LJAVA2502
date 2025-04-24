@@ -1,0 +1,120 @@
+
+CREATE DATABASE index_demo;
+USE index_demo;
+CREATE TABLE users
+(
+    id         INT AUTO_INCREMENT PRIMARY KEY, -- PRIMARY KEY
+    name       VARCHAR(100),
+    email      VARCHAR(100) UNIQUE,            -- UNIQUE INDEX
+    phone      VARCHAR(20),
+    age        INT,
+    created_at DATETIME,
+    INDEX idx_name (name),                     -- BTREE
+    INDEX idx_name_age (name, age)             -- COMPOSITE INDEX
+);
+
+CREATE INDEX idx_name ON users(name);  -- BTREE mặc định
+
+CREATE INDEX idx_name_age ON users (name, age);
+
+CREATE TABLE articles
+(
+    id      INT AUTO_INCREMENT PRIMARY KEY,
+    title   VARCHAR(200),
+    content TEXT,
+    FULLTEXT INDEX idx_fulltext (title, content) -- FULLTEXT INDEX
+);
+
+DELIMITER $$
+
+CREATE PROCEDURE generate_users_data()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+
+    WHILE i <= 10000 DO
+            INSERT INTO users (name, email, phone, age, created_at)
+            VALUES (
+                       CONCAT('User', i),
+                       CONCAT('user', i, '@example.com'),
+                       CONCAT('09', LPAD(FLOOR(RAND() * 100000000), 8, '0')),
+                       FLOOR(18 + (RAND() * 40)),
+                       DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY)
+                   );
+            SET i = i + 1;
+        END WHILE;
+END$$
+
+DELIMITER ;
+
+-- Gọi procedure để tạo dữ liệu
+CALL generate_users_data();
+
+DELIMITER $$
+
+CREATE PROCEDURE generate_articles_data()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    DECLARE keywords TEXT;
+
+    SET keywords = 'MySQL index search performance optimization query database tutorial';
+
+    WHILE i <= 5000 DO
+            INSERT INTO articles (title, content)
+            VALUES (
+                       CONCAT('How to use MySQL Index - Part ', i),
+                       CONCAT(
+                               'This article explains how to optimize search queries in MySQL using indexes. ',
+                               'Topics covered include fulltext search, btree index, and query performance tuning. ',
+                               'Common keywords: ', keywords, ' Article number: ', i
+                       )
+                   );
+            SET i = i + 1;
+        END WHILE;
+END$$
+
+DELIMITER ;
+
+-- Gọi procedure để tạo dữ liệu
+CALL generate_articles_data();
+
+-- Index dùng: PRIMARY
+use index_demo;
+EXPLAIN SELECT * FROM users WHERE id = 123;
+-- demo not use index
+EXPLAIN SELECT * FROM users WHERE id + 0 = 123;
+
+
+-- Indx Unique
+use index_demo;
+EXPLAIN SELECT * FROM users WHERE email = 'user123@example.com';
+
+-- Hàm LOWER() làm mất khả năng dùng index → truy vấn sẽ phải quét toàn bộ bảng (full table scan).
+EXPLAIN SELECT * FROM users WHERE LOWER(email) = 'user123@example.com';
+
+
+-- index b-tree
+use index_demo;
+EXPLAIN SELECT * FROM users WHERE name = 'User123';
+
+-- Do bắt đầu bằng %, không dùng được BTREE index.
+EXPLAIN SELECT * FROM users WHERE name LIKE '%123';
+
+
+-- COMPOSITE INDEX (name, age)
+use index_demo;
+EXPLAIN SELECT * FROM users WHERE name = 'User123' AND age = 30;
+-- Vẫn dùng index idx_name_age vì theo leftmost prefix rule
+EXPLAIN SELECT * FROM users WHERE name = 'User123';
+-- Không dùng index, vì bỏ qua cột đầu (name) trong composite index.
+EXPLAIN SELECT * FROM users WHERE age = 30;
+
+use index_demo;
+EXPLAIN SELECT * FROM articles
+        WHERE MATCH(title, content) AGAINST('MySQL index');
+/*
+ Dùng index idx_fulltext
+Tìm kiếm nhanh hơn rất nhiều so với LIKE
+ */
+-- Không dùng index → full scan toàn bảng, rất chậm nếu dữ liệu lớn.
+EXPLAIN SELECT * FROM articles
+WHERE content LIKE '%index%';
