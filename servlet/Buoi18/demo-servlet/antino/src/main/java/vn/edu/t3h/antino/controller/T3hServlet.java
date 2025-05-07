@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import vn.edu.t3h.antino.dao.impl.UserDaoImpl;
 import vn.edu.t3h.antino.model.UserModel;
 import vn.edu.t3h.antino.service.IUserService;
 import vn.edu.t3h.antino.service.impl.UserServiceImpl;
@@ -39,7 +40,7 @@ public class T3hServlet extends HttpServlet { // tạo ra 1 class servlet, tiế
     private IUserService iUserService;
     @Override
     public void init(ServletConfig config) throws ServletException {
-        iUserService = new UserServiceImpl();
+        iUserService = new UserServiceImpl(new UserDaoImpl());
     }
 
     /*
