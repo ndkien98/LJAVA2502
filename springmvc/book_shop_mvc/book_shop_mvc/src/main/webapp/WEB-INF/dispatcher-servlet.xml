@@ -8,7 +8,10 @@
                            https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!-- Cấu hình component-scan để Spring tìm kiếm các controller -->
-    <context:component-scan base-package="vn.com.t3h.controller" />
+    <context:component-scan base-package="vn.com.t3h" />
+
+<!--    <bean id="homeController" class="vn.com.t3h.controller.HomeController">-->
+<!--    </bean>-->
 
     <!--
     Cấu hình view resolver để hiển thị JSP
