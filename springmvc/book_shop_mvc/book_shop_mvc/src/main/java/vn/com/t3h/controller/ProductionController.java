@@ -1,9 +1,11 @@
 package vn.com.t3h.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import vn.com.t3h.model.ProductionModel;
 import vn.com.t3h.service.ProductionService;
 import vn.com.t3h.service.impl.ProductionServiceImpl;
@@ -47,9 +49,9 @@ public class ProductionController {
     private ProductionService productionService;
 
     @GetMapping("/production-detail")
-    public String productionDetail(Model model) {
-        List<ProductionModel> productionModels = productionService.getProductions();
-        model.addAttribute("models", productionModels);
+    public String productionDetail(@RequestParam("id") Integer id, Model model) {
+        ProductionModel productionDetail = new ProductionModel();
+        model.addAttribute("productionDetail", productionDetail);
         return "production-detail";
     }
 }
