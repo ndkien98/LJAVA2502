@@ -64,7 +64,7 @@ public class HomeController {
     @GetMapping("/home")
     public String home(Model model) {
         List<ProductionModel> productionModels = productionService.getProductions();
-        model.addAttribute("productionModels", productionModels);
+        model.addAttribute("models", productionModels);
         return "home";
     }
 

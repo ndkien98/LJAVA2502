@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -122,7 +123,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-3 py-3">
-                    <a class="text-body" href="./home.html">
+                    <a class="text-body" href="/home">
                         <h3>Shop Bán Sách</h3>
                     </a>
                 </div> <!-- col.// -->
@@ -222,17 +223,17 @@
 
                 <!-- Thông tin sách -->
                 <div class="product-info">
-                    <p><strong>Tên sách:</strong> Tên sách ví dụ</p>
-                    <p><strong>Tác giả:</strong> Tên tác giả</p>
-                    <p><strong>Mô tả:</strong> Đây là mô tả ngắn gọn về nội dung của cuốn sách. Nội dung có thể dài hơn tùy theo dữ liệu thực tế.</p>
-                    <p><strong>Thể loại:</strong> Khoa học viễn tưởng</p>
-                    <p><strong>Nhà xuất bản:</strong> NXB Trẻ</p>
-                    <p><strong>Năm xuất bản:</strong> 2022</p>
-                    <p><strong>Số trang:</strong> 350</p>
-                    <p class="price"><strong>Giá bán:</strong> 120.000₫</p>
-                    <p class="discount"><strong>Giảm giá:</strong> 10%</p>
-                    <p><strong>Số lượng còn lại:</strong> 25 cuốn</p>
-                    <p><strong>Danh mục:</strong> Sách Văn học</p>
+                    <p><strong>Tên sách:</strong> ${prodDetail.title}</p>
+                    <p><strong>Tác giả:</strong> ${prodDetail.author}</p>
+                    <p><strong>Mô tả:</strong>${prodDetail.description}</p>
+                    <p><strong>Thể loại:</strong>${prodDetail.category}</p>
+                    <p><strong>Nhà xuất bản:</strong>${prodDetail.publisher}</p>
+                    <p><strong>Năm xuất bản:</strong>${prodDetail.publicationYear}</p>
+                    <p><strong>Số trang:</strong>${prodDetail.pageCount}</p>
+                    <p class="price"><strong>Giá bán:</strong> ${prodDetail.price} ₫</p>
+                    <p class="discount"><strong>Giảm giá:</strong> ${prodDetail.discountPercent}</p>
+                    <p><strong>Số lượng còn lại:</strong> ${prodDetail.stockQuantity}</p>
+<%--                    <p><strong>Danh mục:</strong> Sách Văn học</p>--%>
                     <a href="#" class="buy-button">Mua ngay</a>
                 </div>
             </div>

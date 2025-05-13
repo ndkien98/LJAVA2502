@@ -8,4 +8,6 @@ public interface ProductionService {
 
 
     public List<ProductionModel> getProductions();
+
+    ProductionModel findById(Integer id);
 }

@@ -7,4 +7,6 @@ import java.util.List;
 public interface ProductionDao {
 
     public List<ProductionModel> getProduction();
+
+    ProductionModel findById(Integer id);
 }

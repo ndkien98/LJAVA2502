@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--syntax import lib in jsp--%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -279,10 +280,16 @@
         </header>
 
         <div class="row item-grid">
-            <c:forEach var="product" items="${productionModels}">
+            <c:forEach var="product" items="${models}">
                 <div class="col-lg-3 col-md-6">
                     <div class="card p-3 mb-4">
-                        <!-- Link hình ảnh tới trang chi tiết sản phẩm -->
+                        <!-- Link hình ảnh tới trang chi tiết sản phẩm
+                         href="production-detail?id=${product.id}"
+                            + gắn param cho url
+                                localhost:8080/production-detail?id=product.id
+                               đánh dấu khi user click vào sản phẩm naof trình duyệt sẽ gửi 1 request localhost:8080/production-detail?id=product.id tới server
+                               -> từ request này lấy ra param để lấy ra chi tiết sản phẩm
+                         -->
                         <a href="production-detail?id=${product.id}" class="img-wrap text-center">
                             <img class="img-fluid" src="static/img/200px.png" alt="Sản phẩm">
                         </a>
