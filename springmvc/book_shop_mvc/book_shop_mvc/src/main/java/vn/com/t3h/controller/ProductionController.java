@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import vn.com.t3h.entity.ProductionEntity;
 import vn.com.t3h.model.ProductionModel;
 import vn.com.t3h.service.ProductionService;
 import vn.com.t3h.service.impl.ProductionServiceImpl;
@@ -74,7 +75,7 @@ public class ProductionController {
     public String productionDetail(@RequestParam("id") Integer id, Model model) {
 
         // b6. trả lại cho tầng service, từ service trả lại tiếp cho tầng controller
-        ProductionModel productionDetail = productionService.findById(id);
+        ProductionEntity productionDetail = productionService.findById(id);
 
         // b7. Tại tầng controller này thực hiện gắn model(class java ) vào page jsp
         model.addAttribute("prodDetail", productionDetail);
@@ -83,7 +84,7 @@ public class ProductionController {
 
     @GetMapping("/production-detail/{id}")
     public String productionDetailV2(@PathVariable("id") Integer id, Model model) {
-        ProductionModel productionDetail = new ProductionModel();
+        ProductionEntity productionDetail = new ProductionEntity();
         model.addAttribute("productionDetail", productionDetail);
         return "production-detail";
     }

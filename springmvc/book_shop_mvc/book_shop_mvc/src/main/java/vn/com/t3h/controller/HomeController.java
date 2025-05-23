@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import vn.com.t3h.entity.ProductionEntity;
 import vn.com.t3h.model.ProductionModel;
 import vn.com.t3h.service.ProductionService;
 
@@ -63,7 +64,7 @@ public class HomeController {
     private ProductionService productionService;
     @GetMapping("/home")
     public String home(Model model) {
-        List<ProductionModel> productionModels = productionService.getProductions();
+        List<ProductionEntity> productionModels = productionService.getProductions();
         model.addAttribute("models", productionModels);
         return "home";
     }
