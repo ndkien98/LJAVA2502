@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.com.t3h.entity.ProductionEntity;
 import vn.com.t3h.model.ProductionModel;
+import vn.com.t3h.model.response.PageResponse;
 import vn.com.t3h.service.ProductionService;
 
 import java.util.List;
@@ -20,9 +21,9 @@ public class ProductionResource {
     }
 
     @GetMapping(value = "/production",produces = "application/json")
-    public ResponseEntity<List<ProductionEntity>> getAll() {
-        List<ProductionEntity> productionModels = productionService.getProductions();
-        ResponseEntity<List<ProductionEntity>> response = new ResponseEntity<>(productionModels, HttpStatus.OK);
+    public ResponseEntity<PageResponse<List<ProductionEntity>>> getAll(@RequestParam(name = "pageSize") Long pageSize, @RequestParam(name = "pageIndex") Long pageIndex) {
+        PageResponse<List<ProductionEntity>> productionModels = productionService.getProductionPaging(pageIndex, pageSize);
+        ResponseEntity<PageResponse<List<ProductionEntity>>> response = new ResponseEntity<>(productionModels, HttpStatus.OK);
         return response;
     }
 

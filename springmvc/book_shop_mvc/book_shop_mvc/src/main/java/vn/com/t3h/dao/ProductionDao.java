@@ -10,4 +10,8 @@ public interface ProductionDao {
     public List<ProductionEntity> getProduction();
 
     ProductionEntity findById(Integer id);
+
+    public List<ProductionEntity> findProductionPaging(Long limit, Long offset);
+    public Long countProduction();
+
 }

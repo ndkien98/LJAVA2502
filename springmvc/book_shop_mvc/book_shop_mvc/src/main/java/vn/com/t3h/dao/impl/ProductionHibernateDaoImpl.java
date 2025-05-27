@@ -20,6 +20,25 @@ public class ProductionHibernateDaoImpl implements ProductionDao {
         this.sessionFactory = sessionFactory;
     }
 
+
+    public Long countProduction() {
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "select count(*) from ProductionEntity";
+            Query query = session.createQuery(hql);
+            return (Long) query.uniqueResult();
+        }
+    }
+
+    public List<ProductionEntity> findProductionPaging(Long limit, Long offset) {
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "from ProductionEntity ";
+            Query query = session.createQuery(hql,ProductionEntity.class);
+            query.setFirstResult(Integer.parseInt(String.valueOf(offset)));
+            query.setMaxResults(Integer.parseInt(String.valueOf(limit)));
+            return query.getResultList();
+        }
+    }
+
     @Override
     public List<ProductionEntity> getProduction() {
         List<ProductionEntity> productionEntities = new ArrayList<ProductionEntity>();
