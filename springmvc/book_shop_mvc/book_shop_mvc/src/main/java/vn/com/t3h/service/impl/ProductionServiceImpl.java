@@ -23,10 +23,11 @@ public class ProductionServiceImpl implements ProductionService {
 
 
     @Override
-    public PageResponse<List<ProductionEntity>> getProductionPaging(Long pageIndex, Long pageSize) {
+    public PageResponse<List<ProductionEntity>> getProductionPaging(Long pageIndex, Long pageSize,
+                                                                    String title,String author,Integer publicYear,String categoryName) {
 
         // query lấy ra tổng số phần tử
-        Long totalProduction = productionDao.countProduction();
+        Long totalProduction = productionDao.countProduction(title,author,publicYear,categoryName);
         // tính tổng số page
         Long totalPage = totalProduction / pageSize;
         if (totalProduction % pageSize > 0) {
@@ -35,7 +36,7 @@ public class ProductionServiceImpl implements ProductionService {
         // tính offset
         Long offset = (pageIndex - 1) * pageSize;
         // query lấy ra data trong page
-        List<ProductionEntity> productionEntities = productionDao.findProductionPaging(pageSize, offset);
+        List<ProductionEntity> productionEntities = productionDao.findProductionPaging(pageSize, offset,title,author,publicYear,categoryName);
 
         PageResponse<List<ProductionEntity>> pageResponse = new PageResponse<>();
         pageResponse.setMessage("Success");

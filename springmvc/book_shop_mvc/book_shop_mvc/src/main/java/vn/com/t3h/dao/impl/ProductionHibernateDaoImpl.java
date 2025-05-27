@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 import vn.com.t3h.dao.ProductionDao;
 import vn.com.t3h.entity.ProductionEntity;
 import vn.com.t3h.model.ProductionModel;
@@ -21,17 +22,42 @@ public class ProductionHibernateDaoImpl implements ProductionDao {
     }
 
 
-    public Long countProduction() {
+    public Long countProduction(String title,String author,Integer publicYear,String categoryName) {
         try (Session session = sessionFactory.openSession()) {
-            String hql = "select count(*) from ProductionEntity";
+            String hql = "select count(p) from ProductionEntity p left join p.category c where 1 = 1";
+            if (StringUtils.hasLength(title)) {
+                hql += " and p.title like '%" + title + "%'";
+            }
+            if (StringUtils.hasLength(author)) {
+                hql += " and p.author like '%" + author + "%'";
+            }
+            if (StringUtils.hasLength(categoryName)) {
+                hql += " and c.categoryName like '%" + categoryName + "%'";
+            }
+            if (publicYear != null) {
+                hql += " and p.publicYear = " + publicYear;
+            }
             Query query = session.createQuery(hql);
             return (Long) query.uniqueResult();
         }
     }
 
-    public List<ProductionEntity> findProductionPaging(Long limit, Long offset) {
+    public List<ProductionEntity> findProductionPaging(Long limit, Long offset,
+                                                       String title,String author,Integer publicYear,String categoryName) {
         try (Session session = sessionFactory.openSession()) {
-            String hql = "from ProductionEntity ";
+            String hql = "Select p from ProductionEntity p left join p.category c where 1 = 1";
+            if (StringUtils.hasLength(title)) {
+                hql += " and p.title like '%" + title + "%'";
+            }
+            if (StringUtils.hasLength(author)) {
+                hql += " and p.author like '%" + author + "%'";
+            }
+            if (StringUtils.hasLength(categoryName)) {
+                hql += " and c.categoryName like '%" + categoryName + "%'";
+            }
+            if (publicYear != null) {
+                hql += " and p.publicYear = " + publicYear;
+            }
             Query query = session.createQuery(hql,ProductionEntity.class);
             query.setFirstResult(Integer.parseInt(String.valueOf(offset)));
             query.setMaxResults(Integer.parseInt(String.valueOf(limit)));

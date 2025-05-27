@@ -21,8 +21,13 @@ public class ProductionResource {
     }
 
     @GetMapping(value = "/production",produces = "application/json")
-    public ResponseEntity<PageResponse<List<ProductionEntity>>> getAll(@RequestParam(name = "pageSize") Long pageSize, @RequestParam(name = "pageIndex") Long pageIndex) {
-        PageResponse<List<ProductionEntity>> productionModels = productionService.getProductionPaging(pageIndex, pageSize);
+    public ResponseEntity<PageResponse<List<ProductionEntity>>> getAll(@RequestParam(name = "pageSize") Long pageSize,
+                                                                       @RequestParam(name = "pageIndex") Long pageIndex,
+                                                                       @RequestParam(name = "title",required = false) String title,
+                                                                       @RequestParam(name = "author",required = false) String author,
+                                                                       @RequestParam(name = "publicationYear",required = false)Integer publicationYear,
+                                                                       @RequestParam(name = "categoryName",required = false)String categoryName) {
+        PageResponse<List<ProductionEntity>> productionModels = productionService.getProductionPaging(pageIndex,pageSize,title,author,publicationYear,categoryName);
         ResponseEntity<PageResponse<List<ProductionEntity>>> response = new ResponseEntity<>(productionModels, HttpStatus.OK);
         return response;
     }

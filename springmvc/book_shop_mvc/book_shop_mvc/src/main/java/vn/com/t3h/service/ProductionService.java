@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface ProductionService {
 
-    public PageResponse<List<ProductionEntity>> getProductionPaging(Long pageIndex, Long pageSize);
+    public PageResponse<List<ProductionEntity>> getProductionPaging(Long pageIndex, Long pageSize,
+                                                                    String title,String author,Integer publicYear,String categoryName);
 
     public List<ProductionEntity> getProductions();
 
