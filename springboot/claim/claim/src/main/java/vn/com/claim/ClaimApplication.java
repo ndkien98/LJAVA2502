@@ -3,7 +3,7 @@ package vn.com.claim;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "vn.com.claim")
 public class ClaimApplication {
 
 	public static void main(String[] args) {
