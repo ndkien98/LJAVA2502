@@ -63,17 +63,15 @@
                             <label for="trang-thai-yeu-cau">Trạng thái yêu cầu</label>
                             <select id="trang-thai-yeu-cau" class="form-control">
                                 <option value="">Tất cả trạng thái</option>
-                                <option value="Khởi tạo">Khởi tạo</option>
-                                <option value="Nhân viên đã xác minh">Nhân viên đã xác minh</option>
-                                <option value="Chập nhận bồi thường">Chập nhận bồi thường</option>
-                                <option value="Nhân viên đang xử lý">Nhân viên đang xử lý</option>
-                                <option value="Thông tin chưa chính xác">Thông tin chưa chính xác</option>
+                                <option value="NEW">Yêu cầu mới</option>
+                                <option value="APPROVED">Đã duyệt</option>
+                                <option value="REJECTED">Bị từ chối</option>
                             </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-12 text-right">
-                            <button id="search-button" class="btn btn-primary">Tìm kiếm</button>
+                            <button id="search-button" onclick="searchClaim()" class="btn btn-primary">Tìm kiếm</button>
                         </div>
                     </div>
 

@@ -5,7 +5,11 @@ const BASE_URL = 'http://localhost:8081';
 
 // khi nào tất cả page đã hiển thị thành công, sẽ chạy method trong này
 window.onload = async function () {
-    renderData(0);
+    renderData(PAGE_INDEX_INIT);
+}
+
+function searchClaim(){
+    renderData(PAGE_INDEX_INIT)
 }
 
 async function renderData(pageIndex){
@@ -63,7 +67,14 @@ function renderTable(jsonData){
     }
 }
 function callApiClaim(pageIndex){
-    let url = BASE_URL + '/api/claim?page=' + pageIndex + '&size='+PAGE_SIZE;
+    // 1. lấy ra toàn bộ value tại các input search
+    let claimCode = document.getElementById("search-ma-yeu-cau").value;
+    let fromDate = document.getElementById('from-date').value;
+    let toDate = document.getElementById('to-date').value;
+    let statusCode = document.getElementById('trang-thai-yeu-cau').value;
+
+    // 2. build url với các value để thành url http://localhost:8080/api/claim?page=0&size=6&claimCode=CLM0014&fromDate=2024-04-15&toDate=2024-04-19&codeStatus=
+    let url = BASE_URL + '/api/claim?page=' + pageIndex + '&size='+PAGE_SIZE + `&claimCode=${claimCode}&fromDate=${fromDate}&toDate=${toDate}&codeStatus=${statusCode}`;
     /*
     fetch:
         chuyên được sử dụng để call api, thực hiện các tác vụ bất đồng bộ
