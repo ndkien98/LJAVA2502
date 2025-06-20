@@ -8,9 +8,33 @@ window.onload = async function () {
     console.log('claim -manager console');
 
     // sử dụng fetch call api lấy json data từ api
-    let jsonData = await callApi();
+    let responseDataApi = await callApi();
     // gắn json data từ api vào table
-    renderTable(jsonData);
+    renderTable(responseDataApi);
+    // render cac page phan trang
+
+    let currentPage = responseDataApi.pageIndex;
+    //1. lay tổng số page response
+    let totalPage = responseDataApi.totalPage;
+    //2. lấy ra tag cha <ul class="pagination"> qua class = pagination
+    let parentPaging = document.getElementsByClassName("pagination")[0];
+    //3. reset html cua page
+    parentPaging.innerHTML = '';
+    //4. chạy vòng lap for theo total page và tạo ra các page
+    for (let i = 0; i < totalPage; i++) {
+        let pageIndexDisplay = i + 1;
+        let page = `<li class="page-item"><a class="page-link" onclick="changePage(${i})">${pageIndexDisplay}</a></li>`
+        if (i === currentPage){
+            page = `<li class="page-item active"><a class="page-link" onclick="changePage(${i})">${pageIndexDisplay}</a></li>`
+        }
+
+        //5. gan các page vào thẻ ul cha
+        parentPaging.innerHTML +=page;
+    }
+}
+
+function changePage(indexPage){
+    alert('click page ' + indexPage)
 }
 
 function renderTable(jsonData){
