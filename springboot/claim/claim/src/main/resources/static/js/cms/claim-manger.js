@@ -5,13 +5,19 @@ const BASE_URL = 'http://localhost:8081';
 
 // khi nào tất cả page đã hiển thị thành công, sẽ chạy method trong này
 window.onload = async function () {
-    console.log('claim -manager console');
+    renderData(0);
+}
 
+async function renderData(pageIndex){
     // sử dụng fetch call api lấy json data từ api
-    let responseDataApi = await callApi();
+    let responseDataApi = await callApiClaim(pageIndex);
     // gắn json data từ api vào table
     renderTable(responseDataApi);
     // render cac page phan trang
+    renderPaging(responseDataApi);
+}
+
+function renderPaging(responseDataApi){
 
     let currentPage = responseDataApi.pageIndex;
     //1. lay tổng số page response
@@ -34,7 +40,7 @@ window.onload = async function () {
 }
 
 function changePage(indexPage){
-    alert('click page ' + indexPage)
+    renderData(indexPage);
 }
 
 function renderTable(jsonData){
@@ -56,8 +62,8 @@ function renderTable(jsonData){
         tbody.innerHTML += row;
     }
 }
-function callApi(){
-    let url = BASE_URL + '/api/claim?page=' + PAGE_INDEX_INIT + '&size='+PAGE_SIZE;
+function callApiClaim(pageIndex){
+    let url = BASE_URL + '/api/claim?page=' + pageIndex + '&size='+PAGE_SIZE;
     /*
     fetch:
         chuyên được sử dụng để call api, thực hiện các tác vụ bất đồng bộ
