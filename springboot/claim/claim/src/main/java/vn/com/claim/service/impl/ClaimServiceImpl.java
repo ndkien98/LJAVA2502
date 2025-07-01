@@ -59,19 +59,42 @@ public class ClaimServiceImpl implements ClaimService {
     public Response<String> createClaim(ClaimRequest claimRequest) {
 
         // 1.
-        ClaimEntity claimEntity = new ClaimEntity();
-        claimEntity.setAmount(claimRequest.getAmount());
-        claimEntity.setClaimDate(claimRequest.getClaimDate() == null ? LocalDate.now() : claimRequest.getClaimDate());
-        claimEntity.setDescription(claimRequest.getDescription());
-        Long totalClaim = claimRepository.count();
-        claimEntity.setCode(Constants.createCodeClaim(totalClaim));
-
+        ClaimEntity claimEntity = getClaimEntity(claimRequest);
         //2.
         ClaimStatusEntity status = claimStatusRepository.findByCode(Constants.STATUS_CODE.NEW.name());
         claimEntity.setClaimStatusEntity(status);
 
         //3
         CustomerRequest customerRequest = claimRequest.getCustomer();
+        CustomerEntity customerEntity = getCustomerEntity(customerRequest, claimEntity);
+        // 4 set product
+        InsuranceProductEntity productEntity = productEntityRepository.findByName(claimRequest.getNameProduct());
+        claimEntity.setInsuranceProductEntity(productEntity);
+        // 5 set claim document
+        Set<ClaimDocumentEntity> claimDocumentEntities = getClaimDocumentEntities(claimRequest, claimEntity);
+        claimEntity.setClaimDocumentEntity(claimDocumentEntities);
+
+        // 6 save data to database
+        customerRepository.save(customerEntity);
+
+        Response<String> response = new Response<>();
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("success");
+        response.setData(claimEntity.getCode());
+        return response;
+    }
+
+    private ClaimEntity getClaimEntity(ClaimRequest claimRequest) {
+        ClaimEntity claimEntity = new ClaimEntity();
+        claimEntity.setAmount(claimRequest.getAmount());
+        claimEntity.setClaimDate(claimRequest.getClaimDate() == null ? LocalDate.now() : claimRequest.getClaimDate());
+        claimEntity.setDescription(claimRequest.getDescription());
+        Long totalClaim = claimRepository.count();
+        claimEntity.setCode(Constants.createCodeClaim(totalClaim));
+        return claimEntity;
+    }
+
+    private CustomerEntity getCustomerEntity(CustomerRequest customerRequest, ClaimEntity claimEntity) {
         CustomerEntity customerEntity = customerRepository.findByPhoneAndEmail(customerRequest.getPhoneNumber(), customerRequest.getEmail());
         if (customerEntity == null) {
             customerEntity = new CustomerEntity();
@@ -86,9 +109,10 @@ public class ClaimServiceImpl implements ClaimService {
         customerEntity.getClaims().add(claimEntity);
 
         claimEntity.setCustomerEntity(customerEntity);
-        // 4 set product
-        InsuranceProductEntity productEntity = productEntityRepository.findByName(claimRequest.getNameProduct());
-        claimEntity.setInsuranceProductEntity(productEntity);
+        return customerEntity;
+    }
+
+    private Set<ClaimDocumentEntity> getClaimDocumentEntities(ClaimRequest claimRequest, ClaimEntity claimEntity) {
         // 5 save file document
         List<DocumentRequest> documentRequests = claimRequest.getDocuments();
         Set<ClaimDocumentEntity> claimDocumentEntities = new HashSet<>();
@@ -131,15 +155,7 @@ public class ClaimServiceImpl implements ClaimService {
             claimDocumentEntity.setUpdateDate(document.getUpdateDate() != null ? document.getUpdateDate() : LocalDate.now());
             claimDocumentEntities.add(claimDocumentEntity);
         }
-
-        claimEntity.setClaimDocumentEntity(claimDocumentEntities);
-        customerRepository.save(customerEntity);
-
-        Response<String> response = new Response<>();
-        response.setCode(HttpStatus.OK.value());
-        response.setMessage("success");
-        response.setData(claimEntity.getCode());
-        return response;
+        return claimDocumentEntities;
     }
 
     @Override
