@@ -5,7 +5,8 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode(callSuper = true)
+import java.util.Objects;
+
 @Entity
 @Table(name = "claim_status")
 @Data
@@ -13,4 +14,9 @@ public class ClaimStatusEntity extends BaseEntity{
 
     private String code;
     private String description;
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(code);
+    }
 }

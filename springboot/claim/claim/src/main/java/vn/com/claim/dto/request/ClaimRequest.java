@@ -8,12 +8,14 @@ import java.util.List;
 @Data
 public class ClaimRequest {
 
+    private CustomerRequest customer;
+
     private String nameProduct;
-    private String description;
     private Double amount;
     private LocalDate claimDate;
+    private String description;
+
 
     private List<DocumentRequest> documents;
 
-    private CustomerRequest customer;
 }

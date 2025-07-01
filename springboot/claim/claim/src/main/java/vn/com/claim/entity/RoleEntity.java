@@ -6,9 +6,10 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Objects;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "roles")
 @Data
@@ -19,6 +20,11 @@ public class RoleEntity extends BaseEntity {
 
     @ManyToMany(mappedBy = "roles")
     private Set<UserEntity> users;
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
+    }
 
 
 }

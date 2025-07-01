@@ -5,6 +5,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
+import vn.com.claim.utils.Constants;
 
 import java.time.LocalDateTime;
 
@@ -16,12 +17,11 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    private LocalDateTime createdDate;
-    private LocalDateTime lastModifiedDate;
-    private String createdBy;
-    private String lastModifiedBy;
-    private Boolean deleted;
-
+    private LocalDateTime createdDate = LocalDateTime.now();
+    private LocalDateTime lastModifiedDate = LocalDateTime.now();
+    private String createdBy = Constants.SYSTEM.ADMIN.toString();;
+    private String lastModifiedBy = Constants.SYSTEM.ADMIN.toString();
+    private Boolean deleted = Boolean.FALSE;
 
 
 }

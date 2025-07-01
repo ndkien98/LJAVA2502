@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "users")
 @Data
@@ -29,4 +29,9 @@ public class UserEntity extends BaseEntity {
                 inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<RoleEntity> roles = new HashSet<RoleEntity>();
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(username);
+    }
 }

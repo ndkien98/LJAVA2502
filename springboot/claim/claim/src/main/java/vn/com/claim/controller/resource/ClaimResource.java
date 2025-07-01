@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.com.claim.dto.ClaimDTO;
 import vn.com.claim.dto.request.ClaimRequest;
+import vn.com.claim.dto.response.Response;
 import vn.com.claim.dto.response.ResponsePage;
 import vn.com.claim.service.ClaimService;
 
@@ -40,10 +41,10 @@ public class ClaimResource {
         return ResponseEntity.ok(responsePage);
     }
 
-    @PostMapping
-    public ResponseEntity<?> createdClaim(@RequestBody ClaimRequest claimRequest){
-
-        return null;
+    @PostMapping("/create")
+    public ResponseEntity<Response<String>> createdClaim(@RequestBody ClaimRequest claimRequest){
+        Response<String> response = claimService.createClaim(claimRequest);
+        return ResponseEntity.ok(response);
     }
 
 }

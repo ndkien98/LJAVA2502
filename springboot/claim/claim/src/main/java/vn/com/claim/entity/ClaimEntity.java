@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "claim")
 @Data
@@ -30,7 +30,12 @@ public class ClaimEntity extends BaseEntity{
     @JoinColumn(name = "product_id")
     private InsuranceProductEntity insuranceProductEntity;
 
-    @OneToMany(mappedBy = "claimEntity")
+    @OneToMany(mappedBy = "claimEntity",cascade = CascadeType.ALL)
     private Set<ClaimDocumentEntity> claimDocumentEntity;
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(code);
+    }
 
 }

@@ -8,6 +8,13 @@ public class Constants {
 
     private static String VALUE_REPLACE = "x";
 
+    public enum SYSTEM {
+        ADMIN
+    }
+    public enum STATUS_CODE {
+        NEW,APPROVED,REJECTED
+    }
+
     public static String createCodeClaim(Long totalClaim){
         String total = String.valueOf(totalClaim + 1);
         String preValue = VALUE_CODE_CLAIM.substring(total.length());
