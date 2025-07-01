@@ -128,7 +128,7 @@ public class ClaimServiceImpl implements ClaimService {
             claimDocumentEntity.setDocumentName(document.getDocumentName());
             claimDocumentEntity.setDocumentType(document.getDocumentType());
             claimDocumentEntity.setFilePath(filePath);
-            claimDocumentEntity.setUpdateDate(document.getUpdateDate());
+            claimDocumentEntity.setUpdateDate(document.getUpdateDate() != null ? document.getUpdateDate() : LocalDate.now());
             claimDocumentEntities.add(claimDocumentEntity);
         }
 

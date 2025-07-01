@@ -6291,26 +6291,44 @@
                     <h3>Tạo yêu cầu bồi thường</h3>
                 </div>
                 <div class="card-body" style="padding-left: 12%; padding-right: 12%;">
-                    <form>
+                    <form id="claim-form">
                         <h3>Thông tin yêu cầu bồi thường</h3>
                         <div class="layout-wrapper">
                             <div class="layout1">
                                 <div class="row mb-3">
-                                    <label class="col-sm-12 col-form-label" for="customerEntity-name">Tên khách hàng</label>
+                                    <label class="col-sm-12 col-form-label" for="customer-name">Tên khách hàng</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="customerEntity-name" placeholder="Nhập tên khách hàng" />
+                                        <input type="text" class="form-control" id="customer-name" placeholder="Nhập tên khách hàng" />
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label class="col-sm-12 col-form-label" for="customerEntity-email">Email khách hàng</label>
+                                    <label class="col-sm-12 col-form-label" for="customer-email">Email khách hàng</label>
                                     <div class="col-sm-12">
-                                        <input type="email" class="form-control" id="customerEntity-email" placeholder="Nhập email khách hàng" />
+                                        <input type="email" class="form-control" id="customer-email" placeholder="Nhập email khách hàng" />
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label class="col-sm-12 col-form-label" for="customerEntity-phone">Số điện thoại</label>
+                                    <label class="col-sm-12 col-form-label" for="customer-phone">Số điện thoại</label>
                                     <div class="col-sm-12">
-                                        <input type="tel" class="form-control" id="customerEntity-phone" placeholder="Nhập số điện thoại khách hàng" />
+                                        <input type="tel" class="form-control" id="customer-phone" placeholder="Nhập số điện thoại khách hàng" />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-12 col-form-label" for="customer-address">Địa chỉ</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="customer-address" placeholder="Nhập địa chỉ khách hàng" />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-12 col-form-label" for="customer-bank-name">Tên ngân hàng</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="customer-bank-name" placeholder="Nhập tên ngân hàng" />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-12 col-form-label" for="customer-bank-number">Số tài khoản ngân hàng</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="customer-bank-number" placeholder="Nhập số tài khoản" />
                                     </div>
                                 </div>
                             </div>
@@ -6318,22 +6336,41 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-12 col-form-label" for="insurance-product">Tên sản phẩm bảo hiểm</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="insurance-product" placeholder="Nhập tên sản phẩm bảo hiểm" />
+                                        <select class="form-select" id="insurance-product">
+                                            <option value="Bảo hiểm xe máy">Bảo hiểm xe máy</option>
+                                            <option value="Bảo hiểm ô tô">Bảo hiểm ô tô</option>
+                                            <option value="Bảo hiểm sức khỏe">Bảo hiểm sức khỏe</option>
+                                            <option value="Bảo hiểm nhân thọ">Bảo hiểm nhân thọ</option>
+                                            <option value="Bảo hiểm du lịch">Bảo hiểm du lịch</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label class="col-sm-12 col-form-label" for="claimEntity-description">Mô tả yêu cầu bồi thường</label>
+                                    <label class="col-sm-12 col-form-label" for="claim-amount">Số tiền yêu cầu bồi thường</label>
                                     <div class="col-sm-12">
-                                        <textarea id="claimEntity-description" class="form-control" placeholder="Nhập mô tả chi tiết về yêu cầu bồi thường về ngày đi khám, chi tiết bệnh tình, chuẩn đoán bác sĩ..."></textarea>
+                                        <input type="number" class="form-control" id="claim-amount" placeholder="Nhập số tiền yêu cầu" />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-12 col-form-label" for="claim-date">Ngày yêu cầu</label>
+                                    <div class="col-sm-12">
+                                        <input type="date" class="form-control" id="claim-date" />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-12 col-form-label" for="claim-description">Mô tả yêu cầu bồi thường</label>
+                                    <div class="col-sm-12">
+                                        <textarea id="claim-description" class="form-control" placeholder="Nhập mô tả chi tiết..."></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="layout3">
                             <h3>Danh sách tài liệu liên quan</h3>
                             <div class="upload-section">
                                 <label for="file-upload">Tải lên tài liệu</label>
-                                <input type="file" id="file-upload" multiple>
+                                <input type="file" id="file-upload" multiple />
                             </div>
                             <div class="table-responsive text-nowrap">
                                 <table class="table table-bordered">
@@ -6346,6 +6383,7 @@
                                     </tr>
                                     </thead>
                                     <tbody id="document-list">
+                                    <!-- JS sẽ render nội dung -->
                                     </tbody>
                                 </table>
                             </div>
@@ -6356,10 +6394,8 @@
                             </div>
                         </div>
                     </form>
-                    <button class="btn btn-brand-2nd" target="_self" role="button">Tạo yêu cầu</button>
+                    <button class="btn btn-brand-2nd" id="create-claim" role="button">Tạo yêu cầu</button>
                 </div>
-
-
             </div>
 
             <div class="category-banner parbase section">
@@ -7092,8 +7128,9 @@
             <tbody class="ss-gac-m" id="search_suggest" style="visibility: hidden;"></tbody>
         </table>
     </div>
-    <script src="homeguest_files/custom.js"></script>
+<!--    <script src="homeguest_files/custom.js"></script>-->
 
+    <script src="js/guest/home.js"></script>
     <script src="./homeguest_files/site-vendor.min.js.download"></script>
 
 
