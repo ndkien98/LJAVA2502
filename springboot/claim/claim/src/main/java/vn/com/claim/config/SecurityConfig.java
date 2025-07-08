@@ -28,7 +28,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> { // config các request
-                    request.requestMatchers("/cms/**").hasAnyRole("ADMIN") // tất cả các đường đãn bắt từ từ /cms/ đều phải có role ADMIN mới được truy cập vào
+                    request.requestMatchers("/cms/claim-manager").hasAnyRole("USER")
+                            .requestMatchers("/cms/**").hasAnyRole("ADMIN") // tất cả các đường đãn bắt từ từ /cms/ đều phải có role ADMIN mới được truy cập vào
                             .requestMatchers("/","/home","/login","/logout","/process_login").permitAll()// tất cả các đường dẫn này có thể truy cạp mà không càn login
                             .requestMatchers(
                                     "/assets/**", "/fonts/**", "/homeguest_files/**",
@@ -43,12 +44,11 @@ public class SecurityConfig {
                         form ->
                                 form.loginPage("/login")// page login được custom
                                         .loginProcessingUrl("/process_login") // url để view gửi username, password lên cho server, config tại form login ở page login
-                                        .defaultSuccessUrl("/cms/dashboard",true)
+                                        .defaultSuccessUrl("/handle-login-success", true)
                                         .failureUrl("/login?error=true")
                 )
                 .logout(logout ->
                         logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .deleteCookies("JWT")
                                 .permitAll());
         return http.build();
     }
