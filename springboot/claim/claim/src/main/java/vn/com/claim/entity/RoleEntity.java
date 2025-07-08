@@ -1,6 +1,7 @@
 package vn.com.claim.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class RoleEntity extends BaseEntity {
     private String name;
     private String code;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
     private Set<UserEntity> users;
 
     @Override

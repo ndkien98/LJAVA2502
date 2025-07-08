@@ -19,4 +19,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "and (:phone is null or u.phone = :phone)")
     Page<UserEntity> findAllByCondition(String username, LocalDate fromDate, LocalDate toDate, String phone, Pageable pageable);
 
+    UserEntity findByUsername(String username);
 }
