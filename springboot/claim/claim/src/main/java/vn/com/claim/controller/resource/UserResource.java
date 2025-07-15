@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import vn.com.claim.dto.UserDTO;
+import vn.com.claim.dto.response.ResponsePage;
 import vn.com.claim.entity.UserEntity;
 import vn.com.claim.service.UserService;
 
@@ -24,11 +25,12 @@ public class UserResource {
     }
 
     @GetMapping()
-    public ResponseEntity<List<UserDTO>> findAll(@RequestParam(required = false) String username,
-                                                 @RequestParam(required = false) LocalDate fromDate,
-                                                 @RequestParam(required = false) LocalDate toDate,
-                                                 @RequestParam(required = false) String phone,
-                                                 Pageable pageable) {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<ResponsePage<List<UserDTO>>> findAll(@RequestParam(required = false) String username,
+                                                @RequestParam(required = false) String fullName,
+                                                @RequestParam(required = false) Integer age,
+                                                @RequestParam(required = false) LocalDate fromDate,
+                                                @RequestParam(required = false) LocalDate toDate,
+                                                Pageable pageable) {
+        return ResponseEntity.ok(userService.getUsers(username, fullName, fromDate, toDate, age, pageable));
     }
 }

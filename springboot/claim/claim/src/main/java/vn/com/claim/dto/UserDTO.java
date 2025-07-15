@@ -9,18 +9,19 @@ import java.time.LocalDate;
 public class UserDTO {
 
     private Long id;
-    private String username;
     private String code;
-    private String email;
+    private String username;
     private String firstName;
     private String lastName;
+    private Integer age;
+    private String email;
     private String phone;
+    private String roleName;
     private String address;
+    private String fullName;
     private LocalDate createdDate;
     private LocalDate lastModifiedDate;
     private String stringBase64Avatar;
     private String mimeType;
-    private String roleName;
-
 
 }

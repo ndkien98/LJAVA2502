@@ -38,6 +38,7 @@ public class SecurityConfig {
                             .requestMatchers("/resource/**").permitAll()
                             .requestMatchers("/auth/**").permitAll()
                             .requestMatchers("/kaira/**").permitAll()
+                            .requestMatchers("/api/**").permitAll()
                             .anyRequest().authenticated();
                 })
                 .formLogin( // custom form login, không sử dụng form login mặc định của spring security

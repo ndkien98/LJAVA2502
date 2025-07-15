@@ -19,9 +19,12 @@ public class UserEntity extends BaseEntity {
     private String pathAvatar;
     private String lastName;
     private String firstName;
+    private String fullName;
     private String email;
     private String address;
     private String mimeType;
+    private Integer age;
+    private String code;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
