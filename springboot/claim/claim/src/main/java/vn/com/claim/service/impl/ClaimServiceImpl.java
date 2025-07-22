@@ -1,6 +1,5 @@
 package vn.com.claim.service.impl;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +19,7 @@ import vn.com.claim.repository.ClaimStatusRepository;
 import vn.com.claim.repository.CustomerRepository;
 import vn.com.claim.repository.InsuranceProductEntityRepository;
 import vn.com.claim.service.ClaimService;
+import vn.com.claim.service.FileService;
 import vn.com.claim.utils.Constants;
 
 import java.io.File;
@@ -32,11 +32,6 @@ import java.util.*;
 @Service
 public class ClaimServiceImpl implements ClaimService {
 
-    @Value("${file.root.folder}")
-    private String fileRootFolder;
-    @Value("${file.document}")
-    private String folderDocument;
-
     private final ClaimRepository claimRepository;
 
     private final ClaimMapper claimMapper;
@@ -47,12 +42,15 @@ public class ClaimServiceImpl implements ClaimService {
 
     private final InsuranceProductEntityRepository productEntityRepository;
 
-    public ClaimServiceImpl(ClaimRepository claimRepository, ClaimMapper claimMapper, ClaimStatusRepository claimStatusRepository, CustomerRepository customerRepository, InsuranceProductEntityRepository productEntityRepository) {
+    private final FileService fileService;
+
+    public ClaimServiceImpl(ClaimRepository claimRepository, ClaimMapper claimMapper, ClaimStatusRepository claimStatusRepository, CustomerRepository customerRepository, InsuranceProductEntityRepository productEntityRepository, FileService fileService) {
         this.claimRepository = claimRepository;
         this.claimMapper = claimMapper;
         this.claimStatusRepository = claimStatusRepository;
         this.customerRepository = customerRepository;
         this.productEntityRepository = productEntityRepository;
+        this.fileService = fileService;
     }
 
     @Override
@@ -71,7 +69,7 @@ public class ClaimServiceImpl implements ClaimService {
         InsuranceProductEntity productEntity = productEntityRepository.findByName(claimRequest.getNameProduct());
         claimEntity.setInsuranceProductEntity(productEntity);
         // 5 set claim document
-        Set<ClaimDocumentEntity> claimDocumentEntities = getClaimDocumentEntities(claimRequest, claimEntity);
+        Set<ClaimDocumentEntity> claimDocumentEntities = fileService.getClaimDocumentEntities(claimRequest, claimEntity);
         claimEntity.setClaimDocumentEntity(claimDocumentEntities);
 
         // 6 save data to database
@@ -90,7 +88,7 @@ public class ClaimServiceImpl implements ClaimService {
         claimEntity.setClaimDate(claimRequest.getClaimDate() == null ? LocalDate.now() : claimRequest.getClaimDate());
         claimEntity.setDescription(claimRequest.getDescription());
         Long totalClaim = claimRepository.count();
-        claimEntity.setCode(Constants.createCodeClaim(totalClaim));
+        claimEntity.setCode(Constants.createCode(totalClaim, Constants.PREFIX_CODE_CLAIM, Constants.VALUE_CODE_CLAIM));
         return claimEntity;
     }
 
@@ -112,51 +110,7 @@ public class ClaimServiceImpl implements ClaimService {
         return customerEntity;
     }
 
-    private Set<ClaimDocumentEntity> getClaimDocumentEntities(ClaimRequest claimRequest, ClaimEntity claimEntity) {
-        // 5 save file document
-        List<DocumentRequest> documentRequests = claimRequest.getDocuments();
-        Set<ClaimDocumentEntity> claimDocumentEntities = new HashSet<>();
-        for (DocumentRequest document : documentRequests) {
 
-            String strBase64 = document.getFileBase64Encoded();
-            if (strBase64.contains(",")){
-                strBase64 = strBase64.split(",")[1];
-            }
-
-            String extension = "." + document.getDocumentType();
-            // tạo ra tên file
-            String fileName = new StringBuilder().append(claimEntity.getCode()).append("_").append(document.getDocumentName()).append(extension).toString();
-
-            // tạo folder lưu file
-            String folderPath = fileRootFolder + folderDocument;
-            File folder = new File(folderPath);
-            if (!folder.exists()){
-                folder.mkdirs();
-            }
-
-            // tạo ra file bằng cách ghi toàn bộ byte vào file
-            String filePath = folderPath + fileName;
-            File file = new File(filePath);
-
-            byte[] bytes = Base64.getDecoder().decode(strBase64);
-            try (FileOutputStream fileOutputStream = new FileOutputStream(file)){
-                fileOutputStream.write(bytes);
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            ClaimDocumentEntity claimDocumentEntity = new ClaimDocumentEntity();
-            claimDocumentEntity.setClaimEntity(claimEntity);
-            claimDocumentEntity.setDocumentName(document.getDocumentName());
-            claimDocumentEntity.setDocumentType(document.getDocumentType());
-            claimDocumentEntity.setFilePath(filePath);
-            claimDocumentEntity.setUpdateDate(document.getUpdateDate() != null ? document.getUpdateDate() : LocalDate.now());
-            claimDocumentEntities.add(claimDocumentEntity);
-        }
-        return claimDocumentEntities;
-    }
 
     @Override
     public ResponsePage<List<ClaimDTO>> getClaims(String claimCode, LocalDate fromDateClaim, LocalDate toDateClaim, String codeStatus, Pageable pageable) {

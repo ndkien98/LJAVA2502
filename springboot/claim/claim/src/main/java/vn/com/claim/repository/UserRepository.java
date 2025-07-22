@@ -21,5 +21,10 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "and (:toDate is null or u.createdDate <= :toDate) " +
             "and (:age is null or u.age = :age)")
     Page<UserEntity> findAllByCondition(String username, String fullName, LocalDateTime fromDate, LocalDateTime toDate, Integer age, Pageable pageable);
+
     UserEntity findByUsername(String username);
+
+
+    Boolean existsAllByUsernameOrEmailOrPhone(String username, String email, String phone);
+
 }

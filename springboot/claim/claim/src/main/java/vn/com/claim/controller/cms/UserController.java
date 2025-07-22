@@ -8,6 +8,11 @@ public class UserController {
 
     @RequestMapping("/cms/user-manager")
     public String manageUsers() {
-        return "cms/user-manager"; // Return the view name for managing users
+        return "cms/user/user-manager"; // Return the view name for managing users
+    }
+
+    @RequestMapping("/cms/create-user")
+    public String createUser() {
+        return "cms/user/create-user"; // Return the view name for creating a new user
     }
 }

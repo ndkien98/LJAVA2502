@@ -2,11 +2,9 @@ package vn.com.claim.controller.resource;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vn.com.claim.dto.UserDTO;
+import vn.com.claim.dto.request.UserRequest;
 import vn.com.claim.dto.response.ResponsePage;
 import vn.com.claim.entity.UserEntity;
 import vn.com.claim.service.UserService;
@@ -32,5 +30,10 @@ public class UserResource {
                                                 @RequestParam(required = false) LocalDate toDate,
                                                 Pageable pageable) {
         return ResponseEntity.ok(userService.getUsers(username, fullName, fromDate, toDate, age, pageable));
+    }
+
+    @PostMapping()
+    public ResponseEntity<String> createUser(@RequestBody UserRequest userRequest) {
+        return ResponseEntity.status(201).body(userService.createUser(userRequest));
     }
 }

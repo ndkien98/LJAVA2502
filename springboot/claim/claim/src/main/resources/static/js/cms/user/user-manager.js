@@ -1,6 +1,6 @@
 const PAGE_INIT = 0;
 const PAGE_SIZE_DEFAULT = 5;
-const BASE_URL = 'http://localhost:8081/api/v1/users';
+const BASE_URL = 'http://localhost:8081/';
 var totalPage = 0;
 
 function actionSearch() {
@@ -10,7 +10,7 @@ function actionSearch() {
 
 function redirectPageCreateUser(){
     // Chuyển hướng đến trang tạo người dùng
-    window.location.href = "http://localhost:8081/cms/create-user";
+    window.location.href = `${BASE_URL}` + "cms/create-user";
 }
 
 // 1. viết method search để gọi api lấy dữ liệu
@@ -37,7 +37,7 @@ function search(pageIndex, pageSize) {
     if (toDate) params.append('toDate', toDate);
 
     // Tạo URL với các tham số tìm kiếm
-    let url = `${BASE_URL}?${params.toString()}`;
+    let url = `${BASE_URL}` + 'api/v1/users?' + params.toString();
 
     // Gọi API để lấy dữ liệu
     fetch(url)

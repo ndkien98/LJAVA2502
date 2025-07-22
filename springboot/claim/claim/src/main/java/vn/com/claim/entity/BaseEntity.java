@@ -19,8 +19,8 @@ public class BaseEntity {
 
     private LocalDateTime createdDate = LocalDateTime.now();
     private LocalDateTime lastModifiedDate = LocalDateTime.now();
-    private String createdBy = Constants.SYSTEM.ADMIN.toString();;
-    private String lastModifiedBy = Constants.SYSTEM.ADMIN.toString();
+    private String createdBy = Constants.ROLE.ADMIN.toString();;
+    private String lastModifiedBy = Constants.ROLE.ADMIN.toString();
     private Boolean deleted = Boolean.FALSE;
 
 
