@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
         // save user entity
         userRepository.save(userEntity);
         // return user code
-        return userEntity.getCode();
+        return userEntity.getUsername();
     }
 
     private void validateUserRequest(UserRequest userRequest) {

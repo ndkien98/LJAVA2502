@@ -34,6 +34,6 @@ public class UserResource {
 
     @PostMapping()
     public ResponseEntity<String> createUser(@RequestBody UserRequest userRequest) {
-        return ResponseEntity.status(201).body(userService.createUser(userRequest));
+        return ResponseEntity.ok(userService.createUser(userRequest));
     }
 }

@@ -65,6 +65,10 @@ public class FileServiceImpl implements FileService {
     }
 
     public void setAvatarUser(UserRequest userRequest, UserEntity userEntity) {
+        if (userRequest.getAvatarStringBase64() == null || userRequest.getAvatarStringBase64().isEmpty()) {
+            log.info("No avatar provided, skipping avatar processing.");
+            return;
+        }
         String[] arrayBase64 = userRequest.getAvatarStringBase64().split(",");
 
         String mimeType = arrayBase64[0];

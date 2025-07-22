@@ -19,7 +19,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "and (:fullName is null or lower(u.fullName) like lower(concat('%', :fullName, '%'))) " +
             "and (:fromDate is null or u.createdDate >= :fromDate) " +
             "and (:toDate is null or u.createdDate <= :toDate) " +
-            "and (:age is null or u.age = :age)")
+            "and (:age is null or u.age = :age) order by u.createdDate desc")
     Page<UserEntity> findAllByCondition(String username, String fullName, LocalDateTime fromDate, LocalDateTime toDate, Integer age, Pageable pageable);
 
     UserEntity findByUsername(String username);
