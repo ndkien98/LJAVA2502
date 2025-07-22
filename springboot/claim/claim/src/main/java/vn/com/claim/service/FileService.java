@@ -13,4 +13,6 @@ public interface FileService {
     Set<ClaimDocumentEntity> getClaimDocumentEntities(ClaimRequest claimRequest, ClaimEntity claimEntity);
 
     void setAvatarUser(UserRequest userRequest, UserEntity userEntity);
+
+    String getBase64FromFile(String filePath);
 }

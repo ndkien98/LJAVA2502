@@ -120,4 +120,23 @@ public class FileServiceImpl implements FileService {
         log.info("File saved successfully at: {}", filePath);
         return filePath;
     }
+
+    public String getBase64FromFile(String filePath) {
+        if (filePath == null || filePath.isEmpty()) {
+            log.error("File path is null or empty");
+            return null;
+        }
+        File file = new File(filePath);
+        if (!file.exists()) {
+            log.error("File not found: {}", filePath);
+            return null;
+        }
+        try {
+            byte[] fileBytes = java.nio.file.Files.readAllBytes(file.toPath());
+            return Base64.getEncoder().encodeToString(fileBytes);
+        } catch (IOException e) {
+            log.error("Error reading file: {}", filePath, e);
+            return null;
+        }
+    }
 }

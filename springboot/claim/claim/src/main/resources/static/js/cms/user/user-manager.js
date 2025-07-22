@@ -65,9 +65,10 @@ function renderTable(data) {
 
     // Duyệt danh sách người dùng
     data.data.forEach(user => {
+        let urlDetail = `${BASE_URL}cms/detail-user/${user.id}`;
         let rowTable = `<tr>
                         <td><input type="checkbox" class="recordCheckbox"></td>
-                        <td>${safeValue(user.code)}</td>
+                        <td><a href="${urlDetail}"><strong>${safeValue(user.code)}</strong></a></td>
                         <td>${safeValue(user.username)}</td>
                         <td>${safeValue(user.fullName)}</td>
                         <td>${safeValue(user.age)}</td>

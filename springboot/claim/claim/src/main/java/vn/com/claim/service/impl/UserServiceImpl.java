@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -65,21 +66,7 @@ public class UserServiceImpl implements UserService {
         var users = page.getContent();
 
         List<UserDTO> userDTOS = users.stream()
-                .map(user -> {
-                    UserDTO userDTO = new UserDTO();
-                    userDTO.setId(user.getId());
-                    userDTO.setUsername(user.getUsername());
-                    userDTO.setFullName(user.getFullName());
-                    userDTO.setEmail(user.getEmail());
-                    userDTO.setAge(user.getAge());
-                    userDTO.setCode(user.getCode());
-                    userDTO.setPhone(user.getPhone());
-                    userDTO.setAddress(user.getAddress());
-                    if (!CollectionUtils.isEmpty(user.getRoles())){
-                        userDTO.setRoleName(user.getRoles().stream().map(RoleEntity::getName).collect(Collectors.joining(",")));
-                    }
-                    return userDTO;
-                })
+                .map(this::getUserDTO)
                 .toList();
         ResponsePage<List<UserDTO>> response = new ResponsePage<>();
         response.setPageIndex(pageable.getPageNumber());
@@ -90,6 +77,40 @@ public class UserServiceImpl implements UserService {
         response.setMessage("Success");
         response.setTotalPage(page.getTotalPages());
         return response;
+    }
+
+    private UserDTO getUserDTO(UserEntity user) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setUsername(user.getUsername());
+        userDTO.setFullName(user.getFullName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setAge(user.getAge());
+        userDTO.setCode(user.getCode());
+        userDTO.setPhone(user.getPhone());
+        userDTO.setAddress(user.getAddress());
+        if (!CollectionUtils.isEmpty(user.getRoles())){
+            userDTO.setRoleName(user.getRoles().stream().map(RoleEntity::getName).collect(Collectors.joining(",")));
+        }
+        userDTO.setCreatedDate(user.getCreatedDate());
+        userDTO.setLastModifiedDate(user.getLastModifiedDate());
+        userDTO.setCreatedBy(user.getCreatedBy());
+        userDTO.setLastModifiedBy(user.getLastModifiedBy());
+        userDTO.setStringBase64Avatar(fileService.getBase64FromFile(user.getPathAvatar()));
+        userDTO.setMimeType(user.getMimeType());
+        return userDTO;
+    }
+
+    @Override
+    public UserDTO getUserById(Long id) {
+
+        Optional<UserEntity> userEntity = userRepository.findById(id);
+        if (userEntity.isEmpty()){
+            throw new RuntimeException("User not found with id: " + id);
+        }
+
+        UserDTO userDTO = getUserDTO(userEntity.get());
+        return userDTO;
     }
 
     @Override
